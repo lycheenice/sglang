@@ -1,0 +1,322 @@
+site_name: SGLang 架构 Wiki
+site_description: SGLang 系统架构梳理 — 按树形拓扑组织的子系统/子模块详解
+site_url: https://github.com/sgl-project/sglang
+repo_url: https://github.com/sgl-project/sglang
+repo_name: sgl-project/sglang
+docs_dir: .
+site_dir: _site
+
+theme:
+  name: material
+  language: zh
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.indexes
+    - navigation.top
+    - toc.follow
+    - content.code.copy
+    - content.code.annotate
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: 切换暗色
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: 切换亮色
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - tables
+  - toc:
+      permalink: true
+
+nav:
+  - 首页: index.md
+  - 交叉引用矩阵: cross-references.md
+  - 00 总览:
+      - 00-overview/index.md
+      - SGLang 是什么: 00-overview/00.1-what-is-sglang.md
+      - 仓库地图: 00-overview/00.2-repo-map.md
+      - 架构一图流: 00-overview/00.3-architecture-overview.md
+      - 进程与线程模型: 00-overview/00.4-process-model.md
+      - 术语表: 00-overview/00.5-glossary.md
+  - 01 前端与客户端层:
+      - 01-frontend/index.md
+      - 包与公共 API: 01-frontend/01.1-package-api.md
+      - GlobalConfig: 01-frontend/01.2-global-config.md
+      - CLI: 01-frontend/01.3-cli.md
+      - launch_server 分发: 01-frontend/01.4-launch-server.md
+      - DSL — api: 01-frontend/01.5.1-dsl-api.md
+      - DSL — IR: 01-frontend/01.5.2-dsl-ir.md
+      - DSL — 解释器: 01-frontend/01.5.3-dsl-interpreter.md
+      - DSL — tracer: 01-frontend/01.5.4-dsl-tracer.md
+      - DSL — choices: 01-frontend/01.5.5-dsl-choices.md
+      - DSL — chat_template: 01-frontend/01.5.6-dsl-chat-template.md
+      - 前端后端: 01-frontend/01.6-fe-backends.md
+      - Engine 客户端: 01-frontend/01.7-engine-client.md
+  - 02 服务入口与 API:
+      - 02-server-api/index.md
+      - Engine: 02-server-api/02.1-engine.md
+      - 原生 API: 02-server-api/02.2.1-native-api.md
+      - OpenAI 兼容端点: 02-server-api/02.2.2-openai-compat.md
+      - Anthropic 兼容: 02-server-api/02.2.3-anthropic-compat.md
+      - Ollama 兼容: 02-server-api/02.2.4-ollama-compat.md
+      - SageMaker/Vertex: 02-server-api/02.2.5-sagemaker-vertex.md
+      - 负载与弹性 EP: 02-server-api/02.2.6-loads-elastic-ep.md
+      - warmup/health: 02-server-api/02.2.7-warmup-health.md
+      - OpenAI protocol: 02-server-api/02.3.1-openai-protocol.md
+      - OpenAI chat/completions: 02-server-api/02.3.2-openai-base-chat-completions.md
+      - OpenAI embed/classify/score/rerank: 02-server-api/02.3.3-openai-embed-classify-score-rerank.md
+      - OpenAI tokenize/转录/流式ASR: 02-server-api/02.3.4-openai-tokenize-transcription-asr.md
+      - OpenAI responses(harmony)+tool: 02-server-api/02.3.5-openai-responses-harmony-tool.md
+      - OpenAI realtime WS: 02-server-api/02.3.6-openai-realtime-ws.md
+      - OpenAI chat编码/SSE/usage: 02-server-api/02.3.7-openai-chat-encoding-sse-usage.md
+      - Anthropic/Ollama handlers: 02-server-api/02.4-anthropic-ollama-handlers.md
+      - gRPC 层: 02-server-api/02.5-grpc.md
+      - Connector: 02-server-api/02.6-connector.md
+      - 入口辅助模块: 02-server-api/02.7-entrypoint-aux.md
+  - 03 核心调度与编排:
+      - 03-orchestration/index.md
+      - 管线总览: 03-orchestration/03.1-pipeline-overview.md
+      - io_struct 消息契约: 03-orchestration/03.2-io-struct.md
+      - TokenizerManager 主类: 03-orchestration/03.3.1-tokenizer-manager.md
+      - TM generate 生命周期: 03-orchestration/03.3.2-tm-generate-lifecycle.md
+      - TM tokenize+mm: 03-orchestration/03.3.3-tm-tokenize-mm.md
+      - TM handle_loop/流式: 03-orchestration/03.3.4-tm-handle-loop-streaming.md
+      - TM ControlMixin: 03-orchestration/03.3.5-tm-control-mixin.md
+      - TM ScoreMixin: 03-orchestration/03.3.6-tm-score-mixin.md
+      - TM 多 tokenizer: 03-orchestration/03.3.7-tm-multi-tokenizer.md
+      - Scheduler 类结构: 03-orchestration/03.4.1-scheduler-structure.md
+      - Scheduler init 编排: 03-orchestration/03.4.2-scheduler-init.md
+      - Scheduler 事件循环: 03-orchestration/03.4.3-scheduler-event-loop.md
+      - Scheduler next_batch: 03-orchestration/03.4.4-scheduler-next-batch.md
+      - Scheduler run_batch/forward: 03-orchestration/03.4.5-scheduler-run-batch-forward.md
+      - Scheduler process_result: 03-orchestration/03.4.6-scheduler-process-result.md
+      - Scheduler 请求准入: 03-orchestration/03.4.7-scheduler-request-admission.md
+      - Scheduler chunked prefill: 03-orchestration/03.4.8-scheduler-chunked-prefill.md
+      - Scheduler overlap: 03-orchestration/03.4.9-scheduler-overlap.md
+      - Scheduler retract/OOM: 03-orchestration/03.4.10-scheduler-retract-oom.md
+      - scheduler_components 协作者: 03-orchestration/03.5-scheduler-components.md
+      - TpModelWorker: 03-orchestration/03.6-tp-worker.md
+      - DetokenizerManager: 03-orchestration/03.7-detokenizer.md
+      - DataParallelController: 03-orchestration/03.8-dp-controller.md
+      - schedule_batch 数据模型: 03-orchestration/03.9-schedule-batch.md
+      - schedule_policy: 03-orchestration/03.10-schedule-policy.md
+  - 04 模型执行:
+      - 04-model-execution/index.md
+      - ModelRunner: 04-model-execution/04.1-model-runner.md
+      - ForwardBatch 与 ForwardMode: 04-model-execution/04.2-forward-batch-mode.md
+      - ForwardContext: 04-model-execution/04.3-forward-context.md
+      - Runners: 04-model-execution/04.4-runners.md
+      - runner_components 编排器: 04-model-execution/04.5-runner-components.md
+      - 池与图配置器: 04-model-execution/04.6-pool-graph-config.md
+      - hook_manager: 04-model-execution/04.7-hook-manager.md
+  - 05 模型加载与注册:
+      - 05-model-loading/index.md
+      - 加载器分发: 05-model-loading/05.1-loader-dispatch.md
+      - 加载器类: 05-model-loading/05.2-loader-classes.md
+      - weight_utils: 05-model-loading/05.3-weight-utils.md
+      - 架构解析: 05-model-loading/05.4-architecture-resolution.md
+      - 模型实现模式: 05-model-loading/05.5-model-pattern.md
+  - 06 Layers:
+      - 06-layers/index.md
+      - Linear: 06-layers/06.1-linear.md
+      - RadixAttention 模块: 06-layers/06.2-radix-attention-module.md
+      - 注意力后端抽象: 06-layers/06.3.1-attn-backend-abstraction.md
+      - 全注意力后端: 06-layers/06.3.2-attn-full-backends.md
+      - 稀疏注意力后端: 06-layers/06.3.3-attn-sparse-backends.md
+      - 线性注意力后端: 06-layers/06.3.4-attn-linear-backends.md
+      - 混合注意力/wrapper: 06-layers/06.3.5-attn-hybrid-wrapper.md
+      - 视觉注意力: 06-layers/06.3.6-attn-vision.md
+      - TBO: 06-layers/06.3.7-attn-tbo.md
+      - MoE 模块与流程: 06-layers/06.4.1-moe-module-flow.md
+      - MoE topk: 06-layers/06.4.2-moe-topk.md
+      - MoE runner: 06-layers/06.4.3-moe-runner.md
+      - MoE token dispatcher: 06-layers/06.4.4-moe-token-dispatcher.md
+      - MoE fused triton: 06-layers/06.4.5-moe-fused-triton.md
+      - MoE DeepEP: 06-layers/06.4.6-moe-deepep.md
+      - 量化: 06-layers/06.5-quantization.md
+      - 旋转位置编码: 06-layers/06.6-rotary-embedding.md
+      - 上下文并行 cp: 06-layers/06.7-context-parallel-cp.md
+      - norm/activation/conv/pooler: 06-layers/06.8-norm-activation-conv-pooler.md
+      - logits/logprob: 06-layers/06.9-logits-logprob.md
+      - Sampler 层: 06-layers/06.10-sampler-layer.md
+      - Vocab/Embedding/LMHead: 06-layers/06.11-vocab-embedding-lmhead.md
+      - Parameter: 06-layers/06.12-parameter.md
+      - LayerCommunicator: 06-layers/06.13-layer-communicator.md
+      - model_parallel(DTensor): 06-layers/06.14-model-parallel-dtensor.md
+      - deep_gemm_wrapper: 06-layers/06.15-deep-gemm-wrapper.md
+  - 07 KV Cache 与内存管理:
+      - 07-kv-cache/index.md
+      - 缓存层级总览: 07-kv-cache/07.1-cache-tiers.md
+      - BasePrefixCache/registry: 07-kv-cache/07.2-base-prefix-cache-registry.md
+      - RadixCache: 07-kv-cache/07.3-radix-cache.md
+      - UnifiedRadixCache: 07-kv-cache/07.4-unified-radix-cache.md
+      - 专用缓存: 07-kv-cache/07.5-specialty-caches.md
+      - 内存池: 07-kv-cache/07.6-memory-pools.md
+      - Allocators: 07-kv-cache/07.7-allocators.md
+      - 批分配: 07-kv-cache/07.8-batch-allocation.md
+      - HiCache: 07-kv-cache/07.9-hicache.md
+      - 存储后端: 07-kv-cache/07.10-storage-backends.md
+      - KV configurator/builder: 07-kv-cache/07.11-kv-configurator-builder.md
+      - KV events: 07-kv-cache/07.12-kv-events.md
+      - mm缓存/稀疏/mmap/vmm: 07-kv-cache/07.13-mm-cache-sparsity-mmap-vmm.md
+  - 08 分布式与并行:
+      - 08-distributed/index.md
+      - 并行分类: 08-distributed/08.1-parallelism-taxonomy.md
+      - parallel_state: 08-distributed/08.2-parallel-state.md
+      - Bootstrap 与初始化: 08-distributed/08.3-bootstrap-init.md
+      - 设备通信器: 08-distributed/08.4-device-communicators.md
+      - 通信算子封装: 08-distributed/08.5-comm-ops.md
+      - DP attention: 08-distributed/08.6-dp-attention.md
+      - 上下文并行 cp/dcp: 08-distributed/08.7-context-parallel-cp-dcp.md
+      - 流水并行: 08-distributed/08.8-pipeline-parallel.md
+      - Elastic EP: 08-distributed/08.9-elastic-ep.md
+      - EPLB/LPLB: 08-distributed/08.10-eplb-lplb.md
+      - weight_sync: 08-distributed/08.11-weight-sync.md
+      - batch_overlap TBO: 08-distributed/08.12-batch-overlap-tbo.md
+  - 09 分离式推理:
+      - 09-disaggregation/index.md
+      - PD 分离概念: 09-disaggregation/09.1-pd-concept.md
+      - base conn ABC: 09-disaggregation/09.2-base-conn.md
+      - common conn: 09-disaggregation/09.3-common-conn.md
+      - 传输后端: 09-disaggregation/09.4-transfer-backends.md
+      - staging buffer/handler: 09-disaggregation/09.5-staging-buffer-handler.md
+      - disagg utils: 09-disaggregation/09.6-disagg-utils.md
+      - KV events 桥: 09-disaggregation/09.7-kv-events-bridge.md
+      - encode server/grpc: 09-disaggregation/09.8-encode-server-grpc.md
+      - Scheduler 分离 mixins: 09-disaggregation/09.9-scheduler-disagg-mixins.md
+      - Decode KV offload: 09-disaggregation/09.10-decode-kv-offload.md
+  - 10 投机解码:
+      - 10-speculative/index.md
+      - 算法总览: 10-speculative/10.1-algorithms-overview.md
+      - Draft worker/runner: 10-speculative/10.2-draft-worker-runner.md
+      - spec_utils 与分配: 10-speculative/10.3-spec-utils-allocation.md
+      - 验证与采样: 10-speculative/10.4-verify-sampling.md
+      - 多层 EAGLE: 10-speculative/10.5-multi-layer-eagle.md
+      - N-gram corpus/embedding: 10-speculative/10.6-ngram-corpus-embedding.md
+      - 与 Scheduler 集成: 10-speculative/10.7-scheduler-integration.md
+  - 11 采样与解码控制:
+      - 11-sampling-control/index.md
+      - SamplingParams/SBI: 11-sampling-control/11.1-sampling-params-sbi.md
+      - penalty 库: 11-sampling-control/11.2-penalty-lib.md
+      - CustomLogitProcessor: 11-sampling-control/11.3-custom-logit-processor.md
+      - Sampler 层: 11-sampling-control/11.4-sampler-layer.md
+      - 受限解码 — 基类/注册表: 11-sampling-control/11.5.1-constrained-base-registry.md
+      - 受限解码 — XGrammar/Outlines/LLGuidance: 11-sampling-control/11.5.2-constrained-xgrammar-outlines-llguidance.md
+      - 受限解码 — Reasoner: 11-sampling-control/11.5.3-constrained-reasoner.md
+      - 受限解码 — FSM 跳跃: 11-sampling-control/11.5.4-constrained-fsm-jump.md
+      - 受限解码 — token_filter: 11-sampling-control/11.5.5-constrained-token-filter.md
+      - 受限解码 — GrammarManager: 11-sampling-control/11.5.6-constrained-grammar-manager.md
+      - Parser — 推理: 11-sampling-control/11.6.1-parser-reasoning.md
+      - Parser — 对话模板: 11-sampling-control/11.6.2-parser-conversation-template.md
+      - Parser — harmony: 11-sampling-control/11.6.3-parser-harmony.md
+      - Parser — FIM: 11-sampling-control/11.6.4-parser-completion-fim.md
+      - Parser — 模板管理/检测: 11-sampling-control/11.6.5-parser-template-manager-detection.md
+      - Function Call — parser: 11-sampling-control/11.7.1-function-call-parser.md
+      - Function Call — detectors: 11-sampling-control/11.7.2-function-call-detectors.md
+      - Function Call — 约束生成: 11-sampling-control/11.7.3-function-call-constraint-gen.md
+  - 12 多模态:
+      - 12-multimodal/index.md
+      - BaseMultimodalProcessor: 12-multimodal/12.1-base-mm-processor.md
+      - 每模型处理器: 12-multimodal/12.2-per-model-processors.md
+      - mm_utils: 12-multimodal/12.3-mm-utils.md
+      - ViT CUDA graph: 12-multimodal/12.4-vit-cuda-graph.md
+      - EVS 视频采样: 12-multimodal/12.5-evs-video.md
+      - 媒体加载: 12-multimodal/12.6-media-loading.md
+      - 定制处理器注册: 12-multimodal/12.7-custom-processor-registration.md
+      - 传输: 12-multimodal/12.8-mm-transport.md
+  - 13 LoRA 与适配器:
+      - 13-lora/index.md
+      - LoRAManager: 13-lora/13.1-lora-manager.md
+      - LoRARegistry/Ref: 13-lora/13.2-lora-registry-ref.md
+      - Drainer/OverlapLoader: 13-lora/13.3-drainer-overlap-loader.md
+      - 内存池/驱逐: 13-lora/13.4-memory-pool-eviction.md
+      - 层包装器: 13-lora/13.5-layer-wrappers.md
+      - 后端: 13-lora/13.6-backends.md
+      - MoE LoRA runners: 13-lora/13.7-moe-lora-runners.md
+      - DeepSeek MLA correction: 13-lora/13.8-deepseek-mla-correction.md
+      - TRT-LLM 实验 LoRA: 13-lora/13.9-trtllm-experimental-lora.md
+  - 14 会话状态检查点:
+      - 14-session-state/index.md
+      - SessionController: 14-session-state/14.1-session-controller.md
+      - state_capturer: 14-session-state/14.2-state-capturer.md
+      - kv_canary: 14-session-state/14.3-kv-canary.md
+      - checkpoint_engine: 14-session-state/14.4-checkpoint-engine.md
+      - multiplex: 14-session-state/14.5-multiplex.md
+  - 15 内核与硬件后端:
+      - 15-kernels-hardware/index.md
+      - 内核三层架构: 15-kernels-hardware/15.1-kernel-three-layer.md
+      - sgl-kernel AOT: 15-kernels-hardware/15.2-sgl-kernel-aot.md
+      - kernels 命名空间: 15-kernels-hardware/15.3-kernels-namespace.md
+      - jit_kernel: 15-kernels-hardware/15.4-jit-kernel.md
+      - platforms: 15-kernels-hardware/15.5-platforms.md
+      - hardware_backend: 15-kernels-hardware/15.6-hardware-backend.md
+      - deep_gemm wrapper: 15-kernels-hardware/15.7-deep-gemm-wrapper.md
+      - 添加内核 skills: 15-kernels-hardware/15.8-adding-kernels-skills.md
+  - 16 配置与运行时上下文:
+      - 16-config-runtime/index.md
+      - ServerArgs/PortArgs: 16-config-runtime/16.1-server-args-port-args.md
+      - config parser: 16-config-runtime/16.2-server-args-config-parser.md
+      - RuntimeContext: 16-config-runtime/16.3-runtime-context.md
+      - environ: 16-config-runtime/16.4-environ.md
+      - arg_groups: 16-config-runtime/16.5-arg-groups.md
+      - 模型配置: 16-config-runtime/16.6-model-configs.md
+      - plugins 框架: 16-config-runtime/16.7-plugins.md
+      - compilation: 16-config-runtime/16.8-compilation.md
+      - global_config legacy: 16-config-runtime/16.9-global-config-legacy.md
+  - 17 可观测性与运维:
+      - 17-observability-ops/index.md
+      - Prometheus metrics: 17-observability-ops/17.1-prometheus-metrics.md
+      - OpenTelemetry tracing: 17-observability-ops/17.2-opentelemetry-tracing.md
+      - 前向指标 FPM: 17-observability-ops/17.3-forward-pass-metrics.md
+      - request metrics/time: 17-observability-ops/17.4-request-metrics-time-stats.md
+      - CPU monitor: 17-observability-ops/17.5-cpu-monitor.md
+      - 启动日志/timer: 17-observability-ops/17.6-startup-logging-timer.md
+      - debug 工具集: 17-observability-ops/17.7-debug-toolkit.md
+      - profiling: 17-observability-ops/17.8-profiling.md
+  - 18 模型网关与代理:
+      - 18-gateway/index.md
+      - 网关总览: 18-gateway/18.1-gateway-overview.md
+      - Worker 编排: 18-gateway/18.2-worker-orchestration.md
+      - Routers: 18-gateway/18.3-routers.md
+      - 路由策略: 18-gateway/18.4-routing-policies.md
+      - 可靠性基元: 18-gateway/18.5-reliability-primitives.md
+      - 服务发现: 18-gateway/18.6-service-discovery.md
+      - MCP/WASM: 18-gateway/18.7-mcp-wasm.md
+      - Mesh HA: 18-gateway/18.8-mesh-ha.md
+      - 网关可观测: 18-gateway/18.9-gateway-observability.md
+      - Auth: 18-gateway/18.10-auth.md
+      - Python bindings: 18-gateway/18.11-python-bindings.md
+      - 进程内 Rust gRPC: 18-gateway/18.12-in-process-rust-grpc.md
+  - 19 构建 CI 与开发:
+      - 19-build-ci-dev/index.md
+      - 仓库布局: 19-build-ci-dev/19.1-repo-layout.md
+      - Docker: 19-build-ci-dev/19.2-docker.md
+      - CI 工作流: 19-build-ci-dev/19.3-ci-workflows.md
+      - 开发工具: 19-build-ci-dev/19.4-dev-tools.md
+      - 测试体系: 19-build-ci-dev/19.5-test-system.md
+      - 基准测试: 19-build-ci-dev/19.6-benchmarks.md
+      - 评测脚本: 19-build-ci-dev/19.7-eval-scripts.md
+      - 贡献约定: 19-build-ci-dev/19.8-contribution-conventions.md
+      - 扩散/多模态生成: 19-build-ci-dev/19.9-diffusion-mm-gen.md
+      - experimental: 19-build-ci-dev/19.10-experimental.md

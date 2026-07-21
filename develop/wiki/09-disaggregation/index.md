@@ -16,7 +16,7 @@ flowchart LR
     PSrv -->|首 token output_ids/logprobs/hidden 元数据| DSrv
     DSched -->|继续 decode| Client
     subgraph Backend["TransferBackend 插件"]
-        MC[Mooncake] -- Mori -- Nixl -- Ascend -- Fake
+        MC[Mooncake] --> Mori --> Nixl --> Ascend --> Fake
     end
     PSrv -.->|stag gather| Backend
     Backend -.->|stag scatter| DSrv
